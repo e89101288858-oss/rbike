@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Сводка</h2>
+<div class="cards">
+  <section><h3>Активные аренды</h3><p>{{ active_rentals }}</p></section>
+  <section><h3>Доступные велосипеды</h3><p>{{ available_bikes }}</p></section>
+  <section><h3>Клиенты</h3><p>{{ clients_count }}</p></section>
+  <section><h3>Доход, ₽</h3><p>{{ income }}</p></section>
+</div>
+{% endblock %}
