@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Аренды</h2>
+<form method="post" class="form-grid">
+  <select name="client_id" required>
+    <option value="">Клиент</option>
+    {% for client in clients %}
+      <option value="{{ client.id }}">{{ client.full_name }}</option>
+    {% endfor %}
+  </select>
+  <select name="bike_id" required>
+    <option value="">Велосипед</option>
+    {% for bike in bikes %}
+      <option value="{{ bike.id }}">{{ bike.model_name }} ({{ bike.serial_number }})</option>
+    {% endfor %}
+  </select>
+  <input name="started_at" type="datetime-local" required>
+  <button type="submit">Открыть аренду</button>
+</form>
+<table>
+  <tr><th>ID</th><th>Клиент</th><th>Велосипед</th><th>Старт</th><th>Финиш</th><th>Сумма</th><th>Статус</th><th></th></tr>
+  {% for rental in rentals %}
+  <tr>
+    <td>{{ rental.id }}</td>
+    <td>{{ rental.client.full_name }}</td>
+    <td>{{ rental.bike.model_name }}</td>
+    <td>{{ rental.started_at.strftime('%Y-%m-%d %H:%M') }}</td>
+    <td>{{ rental.finished_at.strftime('%Y-%m-%d %H:%M') if rental.finished_at else '-' }}</td>
+    <td>{{ rental.total_cost if rental.total_cost is not none else '-' }}</td>
+    <td>{{ rental.status }}</td>
+    <td>
+      {% if rental.status == 'active' %}
+      <form method="post" action="{{ url_for('main.close_rental', rental_id=rental.id) }}">
+        <button type="submit">Закрыть</button>
+      </form>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

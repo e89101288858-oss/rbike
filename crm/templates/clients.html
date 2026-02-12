@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Клиенты</h2>
+<form method="post" class="form-grid">
+  <input name="full_name" placeholder="ФИО" required>
+  <input name="phone" placeholder="Телефон" required>
+  <input name="email" placeholder="Email">
+  <button type="submit">Добавить</button>
+</form>
+<table>
+  <tr><th>ID</th><th>ФИО</th><th>Телефон</th><th>Email</th></tr>
+  {% for client in clients %}
+  <tr><td>{{ client.id }}</td><td>{{ client.full_name }}</td><td>{{ client.phone }}</td><td>{{ client.email or '-' }}</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}
